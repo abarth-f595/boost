@@ -1,160 +1,134 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Webサイト比較テンプレート</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webサイト比較フォーム</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #ffffff;
+      background-color: #f9f9f9;
       color: #333;
       padding: 2rem;
-      line-height: 1.6;
+      max-width: 800px;
+      margin: auto;
     }
     h1 {
-      font-size: 1.8rem;
-      color: #2e7d32;
-    }
-    h2 {
-      border-left: 4px solid #4CAF50;
-      padding-left: 0.5rem;
-      margin-top: 2rem;
-    }
-    .section {
-      margin-bottom: 2rem;
-    }
-    input[type="text"], input[type="url"], textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 6px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    input[type="file"] {
-      margin-top: 8px;
-      margin-bottom: 12px;
-    }
-    .copy-btn {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9rem;
-    }
-    .code-block {
-      background-color: #f5f5f5;
-      border: 1px solid #ddd;
-      padding: 1rem;
-      border-radius: 8px;
-      white-space: pre-wrap;
-      position: relative;
+      font-size: 1.6rem;
+      color: #00796b;
     }
     label {
+      display: block;
+      margin-top: 1rem;
       font-weight: bold;
     }
-    #image-preview {
-      margin-top: 1rem;
-      display: none;
-    }
-    #image-preview img {
-      max-width: 100%;
+    input[type="text"], input[type="url"], select, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 5px;
     }
-    @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-      }
+    .row {
+      display: flex;
+      gap: 1rem;
+    }
+    .row > div {
+      flex: 1;
+    }
+    input[type="checkbox"] {
+      margin-right: 0.5rem;
+    }
+    button {
+      margin-top: 2rem;
+      padding: 0.75rem 2rem;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d40;
     }
   </style>
-  <script>
-    function copyToClipboard(id) {
-      const content = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(content).then(() => {
-        alert("コピーしました！");
-      });
-    }
-
-    function previewImage(event) {
-      const preview = document.getElementById('image-preview');
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          preview.innerHTML = `<img src="${e.target.result}" alt="プレビュー画像">`;
-          preview.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-  </script>
 </head>
 <body>
-  <h1>🧭 Webサイト比較・テンプレート生成フォーム</h1>
+  <h1>🔍 Webサイト比較＆検証フォーム</h1>
+  <form>
+    <label for="base-url">起点となるURL</label>
+    <input type="url" id="base-url" placeholder="https://example.com" required>
 
-  <div class="section">
-    <h2>🎯 目的</h2>
-    <p>Webサイトの目的に沿ったテンプレートをHTMLで生成する</p>
-  </div>
+    <label>フリーワード（最大5つ）</label>
+    <input type="text" placeholder="キーワード1">
+    <input type="text" placeholder="キーワード2">
+    <input type="text" placeholder="キーワード3">
+    <input type="text" placeholder="キーワード4">
+    <input type="text" placeholder="キーワード5">
 
-  <div class="section">
-    <h2>🧠 入力フォーム</h2>
-    <label>🔗 目的のURL：</label>
-    <input type="url" placeholder="https://example.com" />
-
-    <label>🔍 検索キーワード（最大5件）</label>
-    <input type="text" placeholder="キーワード 1" />
-    <input type="text" placeholder="キーワード 2" />
-    <input type="text" placeholder="キーワード 3" />
-    <input type="text" placeholder="キーワード 4" />
-    <input type="text" placeholder="キーワード 5" />
-
-    <label>📍 検索範囲（フリー入力）</label>
-    <input type="text" placeholder="例：全国、東京都内、半径10kmなど" />
-
-    <label>🖼️ プレゼン資料作成</label><br />
-    <input type="checkbox" id="ppt" /> <label for="ppt">作成する</label>
-  </div>
-
-  <div class="section">
-    <h2>📤 出力・結果エリア</h2>
-    <ul>
-      <li>Excel/スプレッドシート用表データ</li>
-      <li>ジャンプリンク付きのURL</li>
-      <li>必要に応じて画像添付</li>
-    </ul>
-
-    <label>📎 参考画像アップロード：</label><br />
-    <input type="file" accept="image/*" onchange="previewImage(event)" />
-    <div id="image-preview"></div>
-
-    <label>🔁 アンサーバック欄（備考・改善メモなど）</label>
-    <textarea rows="5" placeholder="出力に対するコメント、追加で深掘りしたい内容など"></textarea>
-  </div>
-
-  <div class="section">
-    <h2>🧩 英語プロンプト（コピペ用）</h2>
-    <div class="code-block" id="prompt">
-Search for up to 10 websites that are similar in genre to the following URL: [Insert URL]. 
-Exclude any adult or restricted content. 
-Provide a comparison table with the site name, main purpose, visual style, features, and direct link. 
-Present the output in a clean, white-background HTML format with jump links. 
-Also suggest potential use cases for AI-generated content (presentation slides or templates).
+    <div class="row">
+      <div>
+        <label for="gender">性別</label>
+        <select id="gender">
+          <option value="">選択してください</option>
+          <option value="男性">男性</option>
+          <option value="女性">女性</option>
+          <option value="その他">その他</option>
+        </select>
+      </div>
+      <div>
+        <label for="age">年齢</label>
+        <select id="age">
+          <option value="">選択してください</option>
+          <option value="10">10代</option>
+          <option value="20">20代</option>
+          <option value="30">30代</option>
+          <option value="40">40代</option>
+          <option value="50">50代</option>
+          <option value="60">60代以上</option>
+        </select>
+      </div>
     </div>
-    <button class="copy-btn" onclick="copyToClipboard('prompt')">📋 コピーする</button>
-  </div>
 
-  <div class="section">
-    <h2>🛠 改善ポイント</h2>
-    <ul>
-      <li>検索に時間がかかる場合：キーワード数を減らす提案</li>
-      <li>不一致な結果が多い場合：条件変更を再提案</li>
-      <li>表形式・出力構造をカスタマイズしやすくする</li>
-    </ul>
-  </div>
+    <div class="row">
+      <div>
+        <label for="age-min">年齢層（下限）</label>
+        <select id="age-min">
+          <option value="">選択</option>
+          <option value="10">10歳</option>
+          <option value="20">20歳</option>
+          <option value="30">30歳</option>
+          <option value="40">40歳</option>
+          <option value="50">50歳</option>
+        </select>
+      </div>
+      <div>
+        <label for="age-max">年齢層（上限）</label>
+        <select id="age-max">
+          <option value="">選択</option>
+          <option value="20">20歳</option>
+          <option value="30">30歳</option>
+          <option value="40">40歳</option>
+          <option value="50">50歳</option>
+          <option value="60">60歳以上</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="area">地域指定（例：東京都、半径5kmなど）</label>
+    <input type="text" id="area" placeholder="例：大阪市、半径10km">
+
+    <label>
+      <input type="checkbox" id="presentation"> プレゼン資料を作成する
+    </label>
+
+    <label for="output-format">出力形式</label>
+    <select id="output-format">
+      <option value="excel">Excel（.xlsx）</option>
+      <option value="gdrive">Googleスプレッドシート</option>
+    </select>
+
+    <button type="submit">サイト比較を開始</button>
+  </form>
 </body>
 </html>
