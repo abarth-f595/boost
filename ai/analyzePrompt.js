@@ -1,0 +1,1 @@
+// analyzePrompt.js - AIジャンル抽出処理

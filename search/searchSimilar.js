@@ -1,0 +1,1 @@
+// searchSimilar.js - 類似サイト検索処理
